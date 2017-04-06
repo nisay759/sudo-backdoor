@@ -61,7 +61,7 @@ while [ "$attempts" -le 2 ]; do
 	read -s passwd
 	echo
 	attempts=$((attempts+1))
-	echo $passwd | sudo -S true > /dev/null 2>&1
+	echo $passwd | /usr/bin/sudo -S true > /dev/null 2>&1
 	result=$?
 	if [ "$result" -eq 1 ];then
 		if [ "$attempts" -eq 3 ];then
@@ -71,7 +71,7 @@ while [ "$attempts" -le 2 ]; do
 			echo $fail_msg
 		fi
 	elif [ "$result" -eq 0 ];then
-		echo $passwd | sudo -S $@
+		echo $passwd | /usr/bin/sudo -S $@
 		break
 	fi
 done
