@@ -16,11 +16,7 @@ if [ $? -eq 0 ];then
 	/usr/bin/sudo $@
 	result=$?
 	#Exit correctly depending on the result
-	if [ "$result" -eq 0 ];then
-		exit 0
-	elif [ "$result" -eq 1 ]; then
-		exit 1
-	fi
+	exit $result
 fi
 
 #Get locale language
@@ -46,14 +42,11 @@ attempts=0
 trap ctrl_c INT
 
 function ctrl_c() {
-	if [ "$attempts" -eq 0 ];then
-		echo
-		exit 1
-	else
-		echo
+	echo
+	if [ "$attempts" -ne 0 ];then
 		echo "sudo: "$attempts" "$incorrect_msg
-		exit 1
 	fi
+	exit 1
 }
 
 while [ "$attempts" -le 2 ]; do
